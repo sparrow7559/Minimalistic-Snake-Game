@@ -1,0 +1,51 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Snake Game</title>
+    <style>
+        body {
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="256" height="256"></canvas>
+    <script type="module" src="script.js"></script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<body style="margin:0">
+<canvas id="c" width="256" height="256"></canvas>
+<script>
+c = document.getElementById("c");
+x = c.getContext("2d");
+S = [[8, 8]];
+A = [4, 4];
+D = [0, 0];
+onkeydown = e => d = {ArrowRight:[1,0],ArrowLeft:[-1,0],ArrowDown:[0,1],ArrowUp:[0,-1]}[e.key] || D;
+setInterval(() => {
+  D = d;
+  S.unshift([S[0][0] + D[0] & 15, S[0][1] + D[1] & 15]);
+  if (S[0][0] == A[0] && S[0][1] == A[1])
+    do A = [Math.random() * 16 | 0, Math.random() * 16 | 0];
+    while (S.some(([X, Y]) => X == A[0] && Y == A[1]));
+  else if (S.slice(1).some(([X, Y]) => X == S[0][0] && Y == S[0][1]))
+    S = [S[0]];
+  else S.pop();
+  x.fillStyle = "#000";
+  x.fillRect(0, 0, 256, 256);
+  x.fillStyle = "red";
+  x.fillRect(A[0]*16, A[1]*16, 16, 16);
+  x.fillStyle = "lime";
+  S.forEach(([X, Y]) => x.fillRect(X*16, Y*16, 16, 16));
+}, 125);
+</script>
+</body>
+</html>
+
